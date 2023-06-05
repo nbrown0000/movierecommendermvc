@@ -1,0 +1,82 @@
+﻿@model MovieDetail;
+@using MovieRecommender.Helper;
+@{
+    string tmdbImageUrlBase = "https://image.tmdb.org/t/p/w500";
+    string defaultImageUrl = "https://images.unsplash.com/photo-1560109947-543149eceb16?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=435&q=80";
+}
+
+@*<h1>Movie Detail</h1>*@
+
+<div class="album py-2">
+    <div class="d-flex justify-content-center flex-wrap">
+
+            <div class="d-flex flex-row card mb-2 box-shadow m-2" style="width: 50rem;">
+
+                @if (!String.IsNullOrWhiteSpace(@Model.PosterPath))
+                {
+                    <img class="card-img-top" alt="Thumbnail [100%x225]" style="width: 50%; display: inline-block;" src="@String.Concat(tmdbImageUrlBase, @Model.PosterPath)" data-holder-rendered="true">
+                }
+                else
+                {
+                    <img class="card-img-top" alt="Thumbnail [100%x225]" style="width: 50%; min-height:inherit display: inline-block;" src="@defaultImageUrl" data-holder-rendered="true">
+                }
+
+                <div class="card-body d-flex align-items-start justify-content-between flex-column" style="width: 50%; display:inline-block">
+                    
+                    <h6 class="card-title">
+                        <strong>Title: </strong><br />
+                        @Model.Title
+                    </h6>
+
+                    @if (@Model.ReleaseDate != null)
+                    {
+                        <p class="card-text">
+                            <strong>Released: </strong><br />
+                            @Model.ReleaseDate.Value.Year.ToString()
+                        </p>
+                    }
+                    else
+                    {
+                        <p class="card-text">
+                            <strong>Released: </strong><br />
+                            TBA
+                        </p>
+                    }
+
+                    <p class="card-text">
+                        <strong>Overview: </strong><br />
+                        @Model.Overview
+                    </p>
+
+                    @*TODO: Add cast
+                        top 5?
+                        maybe add links to actor profile?
+                        add way to search for movie with that actor in them?*@
+
+                    <p class="card-text">
+                        <strong>Runtime: </strong><br />
+                        @Model.Runtime minutes
+                    </p>
+
+                    <p class="card-text">
+                        @*TODO format this to 1 decimal place*@
+                        <strong>Rating: </strong><br />
+                        @Model.Rating.ToString()
+                    </p>
+
+                <p class="card-text">
+                    <strong>Homepage: </strong><br />
+                    <a href="@Model.Homepage" target="_blank">Homepage</a>
+                </p>
+
+                    <p class="card-text" style="min-height: 3rem">
+                        <strong>Genres: </strong><br />
+                        @StringFunctions.GenreObjectsList_ToStringOfNames(Model.Genres)
+                    </p>
+
+                </div>
+            </div>
+
+    </div>
+</div>
+
