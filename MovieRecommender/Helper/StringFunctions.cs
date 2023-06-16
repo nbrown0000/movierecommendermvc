@@ -63,7 +63,7 @@ namespace MovieRecommender.Helper
             return genresString;
         }
 
-        public static string GenreObjectsList_ToStringOfNames(List<Genre> genres)
+        public static string ConvertGenreObjectsListToStringOfNames(List<Genre> genres)
         {
             if (genres == null || genres.Count() == 0)
             {

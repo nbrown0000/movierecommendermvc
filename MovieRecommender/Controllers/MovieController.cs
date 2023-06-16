@@ -35,9 +35,13 @@ namespace MovieRecommender.Controllers
         public async Task<IActionResult> Recommendations(int movieId)
         {
             MovieDetail movieDetail = await _tmdbAPIContext.GetMovieByIdAsync(movieId);
-            var genresString = StringFunctions.ConvertGenreObjectsListToStringOfIds(movieDetail.Genres);
-            var castList = await _tmdbAPIContext.GetCastByMovieIdAsync(movieId);
-            var recommendedMovies = await _tmdbAPIContext.GetRecommendationsMatchingGenresAndLeadActorAsync(genresString, castList.First().Id);
+
+            if (movieDetail.Genres == null || movieDetail.Genres.Count == 0)
+            {
+                // TODO: log error
+                // TODO: contingency for empty genres
+            }
+            var recommendedMovies = await _tmdbAPIContext.GetMovieRecommendationsWithSameGenres(movieDetail.Genres);
 
             return View(recommendedMovies);
         }
