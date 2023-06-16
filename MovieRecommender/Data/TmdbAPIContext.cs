@@ -61,9 +61,11 @@ namespace MovieRecommender.Data
             return movie;
         }
 
-        public async Task<IEnumerable<Movie>> GetMovieRecommendationsWithSameGenres(IEnumerable<Genre> genres)
+        public async Task<MovieResultsModel> GetMovieRecommendationsWithSameGenres(IEnumerable<Genre> genres, int page = 1)
         {
-            string queryUrl = $"discover/movie?api_key={_tmdbApiKey}&with_genres={StringFunctions.ConvertGenreObjectsListToStringOfIds(genres.ToList())}";
+            string queryUrl = $"discover/movie?api_key={_tmdbApiKey}" +
+                $"&with_genres={StringFunctions.ConvertGenreObjectsListToStringOfIds(genres.ToList())}" +
+                $"&page={page}";
 
             HttpRequestMessage request = new HttpRequestMessage(method: HttpMethod.Get, queryUrl);
             HttpResponseMessage response = await _client.SendAsync(request);
@@ -75,8 +77,18 @@ namespace MovieRecommender.Data
 
             dynamic result = await response.Content.ReadAsStringAsync();
             var jsonObject = JObject.Parse(result);
-            var recommendedMovieList = jsonObject["results"].ToObject<List<Movie>>();
-            return recommendedMovieList;
+            var recommendedMovies = jsonObject["results"].ToObject<List<Movie>>();
+            var pageNumber = jsonObject["page"].ToObject<int>();
+            var totalPages = jsonObject["total_pages"].ToObject<int>();
+
+            var movieRecommendationResults = new MovieResultsModel
+            {
+                Movies = recommendedMovies,
+                Page = pageNumber,
+                TotalPages = totalPages
+            };
+
+            return movieRecommendationResults;
         }
 
         public async Task<IEnumerable<Actor>> GetCastByMovieIdAsync(int id)

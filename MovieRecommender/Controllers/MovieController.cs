@@ -32,7 +32,7 @@ namespace MovieRecommender.Controllers
             return View("Index", movieList);
         }
 
-        public async Task<IActionResult> Recommendations(int movieId)
+        public async Task<IActionResult> Recommendations(int movieId, int page = 1)
         {
             MovieDetail movieDetail = await _tmdbAPIContext.GetMovieByIdAsync(movieId);
 
@@ -41,7 +41,7 @@ namespace MovieRecommender.Controllers
                 // TODO: log error
                 // TODO: contingency for empty genres
             }
-            var recommendedMovies = await _tmdbAPIContext.GetMovieRecommendationsWithSameGenres(movieDetail.Genres);
+            var recommendedMovies = await _tmdbAPIContext.GetMovieRecommendationsWithSameGenres(movieDetail.Genres, page);
 
             return View(recommendedMovies);
         }

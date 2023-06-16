@@ -12,19 +12,19 @@
 
         @foreach (var movie in Model)
         {
-            <div class="card mb-2 box-shadow m-2" style="width: 14rem;">
-                <a asp-action="Recommendations" asp-route-movieId="@movie.Id" class="btn btn-primary">Show Similar</a>
+            <div class="card mb-2 box-shadow m-2" style="width: 12rem;">
+                <a asp-action="Recommendations" asp-route-movieId="@movie.Id" class="btn btn-primary">Recommend Similar</a>
 
                 @if (!String.IsNullOrWhiteSpace(@movie.PosterPath))
                 {
-                    <img class="card-img-top" alt="Movie Poster" style="width: 100%; height: 20rem; display: block;" src="@String.Concat(tmdbImageUrlBase, @movie.PosterPath)" data-holder-rendered="true">
+                    <img class="card-img-top" alt="Movie Poster" style="width: 100%; height: 17.5rem; display: block;" src="@String.Concat(tmdbImageUrlBase, @movie.PosterPath)" data-holder-rendered="true">
                 }
                 else
                 {
-                    <img class="card-img-top" alt="Default Movie Poster" style="width: 100%; height: 20rem; display: block;" src="@defaultImageUrl" data-holder-rendered="true">
+                    <img class="card-img-top" alt="Default Movie Poster" style="width: 100%; height: 17.5rem; display: block;" src="@defaultImageUrl" data-holder-rendered="true">
                 }
 
-                <a asp-action="Detail" asp-route-movieId="@movie.Id" class="btn btn-secondary">Details</a>
+                <a asp-action="Detail" asp-route-movieId="@movie.Id" class="btn btn-secondary">View Details</a>
 
                 @*TODO: Mouseover image shows button "Recommend Similar"*@
 
