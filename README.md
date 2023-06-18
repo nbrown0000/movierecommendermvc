@@ -2,8 +2,8 @@
 A web application for recommending movies
 
 ## Technologies
-ASP.NET MVC
-C#
+- ASP.NET MVC
+- C#
 
 ## How to run
 1. Fork/clone repo
