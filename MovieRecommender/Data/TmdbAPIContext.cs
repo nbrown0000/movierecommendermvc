@@ -61,7 +61,7 @@ namespace MovieRecommender.Data
             return movie;
         }
 
-        public async Task<MovieResultsModel> GetMovieRecommendationsWithSameGenres(IEnumerable<Genre> genres, int page = 1)
+        public async Task<MovieRecommendationsModel> GetMovieRecommendationsWithSameGenres(IEnumerable<Genre> genres, int page = 1)
         {
             string queryUrl = $"discover/movie?api_key={_tmdbApiKey}" +
                 $"&with_genres={StringFunctions.ConvertGenreObjectsListToStringOfIds(genres.ToList())}" +
@@ -81,7 +81,7 @@ namespace MovieRecommender.Data
             var pageNumber = jsonObject["page"].ToObject<int>();
             var totalPages = jsonObject["total_pages"].ToObject<int>();
 
-            var movieRecommendationResults = new MovieResultsModel
+            var movieRecommendationResults = new MovieRecommendationsModel
             {
                 Movies = recommendedMovies,
                 Page = pageNumber,

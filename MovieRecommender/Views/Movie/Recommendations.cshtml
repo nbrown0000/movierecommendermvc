@@ -1,12 +1,20 @@
 ﻿@using MovieRecommender.Helper;
 @*@model IEnumerable<Movie>*@
-@model MovieResultsModel
+@model MovieRecommendationsModel
 @{
     string tmdbImageUrlBase = "https://image.tmdb.org/t/p/original";
     string defaultImageUrl = "https://images.unsplash.com/photo-1560109947-543149eceb16?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=435&q=80";
 }
 
 <h1>Your movie recommendations</h1>
+
+<p>
+    Page 
+    @for (int i=1; i<=Model.TotalPages; i++)
+    {
+        <a asp-action="Recommendations" asp-route-movieId=@Model.MovieId asp-route-page=@i>@i</a>
+    }
+</p>
 
 <div class="album py-2 bg-light">
     <div class="d-flex justify-content-center flex-wrap">
@@ -25,7 +33,7 @@
 
                 <a asp-action="Detail" asp-route-movieId="@movie.Id" class="btn btn-secondary">View Details</a>
 
-                @*<div class="card-body d-flex align-items-start justify-content-between flex-column">
+                <div class="card-body d-flex align-items-start justify-content-between flex-column">
                     <h6 class="card-title"><strong>@movie.Title</strong></h6>
 
                     @if (@movie.ReleaseDate != null)
@@ -43,9 +51,16 @@
 
                     @*Details Button (opens details page with more information about the movie)*@
 
-                @*</div>*@
+                </div>
             </div>
         }
     </div>
 </div>
 
+<p>
+    Page
+    @for (int i = 1; i <= Model.TotalPages; i++)
+    {
+        <a asp-action="Recommendations" asp-route-movieId=@Model.MovieId asp-route-page=@i>@i</a>
+    }
+</p>

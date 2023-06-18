@@ -42,6 +42,8 @@ namespace MovieRecommender.Controllers
                 // TODO: contingency for empty genres
             }
             var recommendedMovies = await _tmdbAPIContext.GetMovieRecommendationsWithSameGenres(movieDetail.Genres, page);
+            recommendedMovies.MovieId = movieId;
+            recommendedMovies.Genres = movieDetail.Genres;
 
             return View(recommendedMovies);
         }
