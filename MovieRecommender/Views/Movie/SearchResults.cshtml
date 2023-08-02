@@ -1,0 +1,58 @@
+﻿@using MovieRecommender.Helper;
+@model IEnumerable<Movie>
+@{
+    string tmdbImageUrlBase = "https://image.tmdb.org/t/p/original";
+    string defaultImageUrl = "https://images.unsplash.com/photo-1560109947-543149eceb16?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=435&q=80";
+}
+
+<div class="card mt-5 m-3 p-3 d-inline-flex bg-light bg-opacity-75">
+
+<h1>Your movie search results</h1>
+
+<div class="album py-2">
+    <div class="d-flex justify-content-center flex-wrap">
+
+        @foreach (var movie in Model)
+        {
+            <div class="card mb-2 box-shadow m-2" style="width: 12rem;">
+                <a asp-action="Recommendations" asp-route-movieId="@movie.Id" class="btn btn-primary">Recommend Similar</a>
+
+                @if (!String.IsNullOrWhiteSpace(@movie.PosterPath))
+                {
+                    <img class="card-img-top" alt="Movie Poster" style="width: 100%; height: 17.5rem; display: block;" src="@String.Concat(tmdbImageUrlBase, @movie.PosterPath)" data-holder-rendered="true">
+                }
+                else
+                {
+                    <img class="card-img-top" alt="Default Movie Poster" style="width: 100%; height: 17.5rem; display: block;" src="@defaultImageUrl" data-holder-rendered="true">
+                }
+
+                <a asp-action="Detail" asp-route-movieId="@movie.Id" class="btn btn-secondary">View Details</a>
+
+                @*TODO: Mouseover image shows button "Recommend Similar"*@
+
+
+                <div class="card-body d-flex align-items-start justify-content-between flex-column">
+                    <h6 class="card-title"><strong>@movie.Title</strong></h6>
+
+                    @if (@movie.ReleaseDate != null)
+                    {
+                        <p class="card-text">@movie.ReleaseDate.Value.Year.ToString()</p>
+                    }
+                    else
+                    {
+                        <p class="card-text">TBA</p>
+                    }
+
+                    <p class="card-text" style="min-height: 3rem">@StringFunctions.ConvertGenreIdsToNames(movie.GenreIds)</p>
+
+
+
+                    @*Details Button (opens details page with more information about the movie)*@
+
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+</div>
