@@ -23,6 +23,22 @@ namespace MovieRecommender.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult SearchByFavouriteMovie()
+        {
+            return View("SearchByFavouriteMovie");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SearchByFavouriteMovie(SearchByFavouriteMovieModel model)
+        {
+            // TODO: Sanitize data from form input
+
+            var movieList = await _tmdbAPIContext.SearchMoviesByTitleAsync(model.Title);
+
+            return View("SearchResults", movieList);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Search(SearchMovieModel searchMovieModel)
         {
