@@ -6,6 +6,13 @@ namespace MovieRecommender.Helper
 {
     public class StringFunctions
     {
+        public static string FormatMovieYear(DateTime? date)
+        {
+            if (date == null) {
+                return "TBA";
+            }
+            return date.Value.Year.ToString();
+        }
         public static string ConvertGenreIdsToNames(List<int> genres)
         {
             if (genres == null || genres.Count() == 0)
