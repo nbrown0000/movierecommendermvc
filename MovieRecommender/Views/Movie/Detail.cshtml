@@ -10,42 +10,47 @@
     <div class="album py-2">
         <div class="d-flex flex-wrap">
 
-                <div class="d-flex flex-row card mb-2 box-shadow m-2" style="width: 50rem;">
+            <div class="d-flex flex-row card mb-2 box-shadow m-2" style="width: 50rem;">
 
-                    @if (!String.IsNullOrWhiteSpace(@Model.PosterPath))
-                    {
-                        <img class="card-img-top" alt="Thumbnail [100%x225]" style="width: 50%; display: inline-block;" src="@String.Concat(tmdbImageUrlBase, @Model.PosterPath)" data-holder-rendered="true">
-                    }
-                    else
-                    {
-                        <img class="card-img-top" alt="Thumbnail [100%x225]" style="width: 50%; min-height:inherit display: inline-block;" src="@defaultImageUrl" data-holder-rendered="true">
-                    }
+                <div class="card-body w-50 m-0 p-0">
+                    <a href="@Model.Homepage" target="@Model.Homepage">
+                        @if (!String.IsNullOrWhiteSpace(@Model.PosterPath))
+                        {
+                            <img class="card-img-top" alt="Thumbnail [100%x225]" style="width: 100%; height: 100%; display: inline-block;" src="@String.Concat(tmdbImageUrlBase, @Model.PosterPath)" data-holder-rendered="true">
+                        }
+                        else
+                        {
+                            <img class="card-img-top" alt="Thumbnail [100%x225]" style="width: 100%; height: 100%; display: inline-block;" src="@defaultImageUrl" data-holder-rendered="true">
+                        }
+                    </a>
+                </div>
 
-                    <div class="card-body d-flex align-items-start flex-column ms-3" style="width: 50%">
+                <div class="card-body d-flex align-items-start flex-column ms-3" style="width: 50%">
                     
-                        <h1 class="card-title mb-3">@Model.Title</h1>
+                    <h1 class="card-title mb-3">@Model.Title</h1>
 
-                        <div class="d-flex flex-row mb-3">
-                            <p class="card-text text-muted m-0 p-0 pe-4">@StringFunctions.FormatMovieYear(@Model.ReleaseDate)</p>
-                            <p class="card-text text-muted m-0 p-0 pe-4">@Model.Runtime minutes</p>
-                            <p class="card-text text-muted m-0 p-0 pe-4">@Model.Rating.ToString()/10</p>
-                        </div>
+                    <div class="d-flex flex-row">
+                        <p class="card-text text-muted m-0 p-0 pe-4">@StringFunctions.FormatMovieYear(@Model.ReleaseDate)</p>
+                        <p class="card-text text-muted m-0 p-0 pe-4">@Model.Runtime minutes</p>
+                        <p class="card-text text-muted m-0 p-0 pe-4">@Model.Rating.ToString()/10</p>
+                    </div>
 
-                        <div>
-                            @*TODO: Add cast
-                            top 5?
-                            maybe add links to actor profile?
-                            add way to search for movie with that actor in them?*@
-                        </div>
+                    <p class="card-text text-muted mb-3">@StringFunctions.ConvertGenreObjectsListToStringOfNames(Model.Genres)</p>
 
-                        <p class="card-text m-0 p-0 mb-3">@Model.Overview</p>
+                    <p class="card-text m-0 p-0 mb-3">@Model.Overview</p>
 
-                    <p class="card-text text-muted mb-2">@StringFunctions.ConvertGenreObjectsListToStringOfNames(Model.Genres)</p>
-
-                    <p class="card-text">
-                        <a href="@Model.Homepage" target="_blank">Movie home page</a>
-                    </p>
-
+                    <div class="d-flex flex-row justify-content-between flex-wrap">
+                        @foreach (var actor in Model.Cast.Take(5))
+                        {
+                            <div class="d-flex flex-row w-50 mb-2">
+                                <img class="detail-page-actor-image" width="60rem" height="60rem" src="@String.Concat(tmdbImageUrlBase,actor.Image)">
+                                <div class="d-flex flex-column p-2">
+                                    <p class="card-text p-0 m-0 small">@actor.Name</p>
+                                    <p class="card-text text-muted small">@actor.Character</p>
+                                </div>
+                            </div>
+                        }
+                    </div>
 
                 </div>
             </div>

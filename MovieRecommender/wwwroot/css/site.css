@@ -60,3 +60,8 @@ body::before {
     background-color: #007bff;
     border-color: #007bff;
 }
+
+.detail-page-actor-image {
+    border-radius: 50%;
+    aspect-ratio: 1;
+}

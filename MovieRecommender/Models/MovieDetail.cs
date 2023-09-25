@@ -34,5 +34,7 @@ namespace MovieRecommender.Models
         [JsonProperty("homepage")]
         public string Homepage { get; set; }
 
+        public List<Actor> Cast { get; set; }
+
     }
 }

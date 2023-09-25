@@ -68,6 +68,9 @@ namespace MovieRecommender.Controllers
         {
             MovieDetail movieDetail = await _tmdbAPIContext.GetMovieByIdAsync(movieId);
 
+            IEnumerable<Actor> movieCast = await _tmdbAPIContext.GetCastByMovieIdAsync(movieId);
+            movieDetail.Cast = movieCast.ToList();
+
             return View(movieDetail);
         }
     }
