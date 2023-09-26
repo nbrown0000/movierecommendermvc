@@ -1,12 +1,12 @@
-﻿@model SearchByFavouriteMovieModel
+﻿@model SearchByTitle
 
 <div class="card mt-5 m-3 p-3 d-inline-flex bg-light">
-    <form method="post" asp-controller="Movie" asp-action="SearchByFavouriteMovie">
+    <form method="post" asp-controller="Movie" asp-action="SearchByTitle">
 
         <h3>Search for your favourite movie</h3>
 
         <div class="form-group mt-3" style="width: 20rem;">
-            <input asp-for="Title" type="text" class="form-control" placeholder="Title">
+            <input asp-for="SearchTitle" type="text" class="form-control" placeholder="Title">
         </div>
 
         <button type="submit" class="btn btn-primary mt-3">Submit</button>

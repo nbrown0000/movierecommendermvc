@@ -4,7 +4,7 @@ namespace MovieRecommender.Interfaces
 {
     public interface ITmdbAPIContext
     {
-        public Task<IEnumerable<Movie>> SearchMoviesByTitleAsync(string title);
+        public Task<MovieSearchResults> SearchMoviesByTitleAsync(string title, int page);
         public Task<MovieDetail> GetMovieByIdAsync(int id);
         public Task<MovieRecommendationsModel> GetMovieRecommendationsWithSameGenres(IEnumerable<Genre> genres, int page);
         public Task<IEnumerable<Actor>> GetCastByMovieIdAsync(int id);

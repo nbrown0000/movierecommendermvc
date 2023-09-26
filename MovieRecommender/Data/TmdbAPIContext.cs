@@ -26,9 +26,9 @@ namespace MovieRecommender.Data
             _tmdbApiKey = _appConfig["TmdbApiKey"];
         }
 
-        public async Task<IEnumerable<Movie>> SearchMoviesByTitleAsync(string title)
+        public async Task<MovieSearchResults> SearchMoviesByTitleAsync(string title, int page)
         {
-            string queryUrl = $"search/movie?api_key={_tmdbApiKey}&include_adult=false&page=1&query={title}";
+            string queryUrl = $"search/movie?api_key={_tmdbApiKey}&include_adult=false&page={page}&query={title}";
             HttpRequestMessage request = new HttpRequestMessage(method: HttpMethod.Get, queryUrl);
             HttpResponseMessage response = await _client.SendAsync(request);
 
@@ -40,7 +40,16 @@ namespace MovieRecommender.Data
             dynamic result = await response.Content.ReadAsStringAsync();
             var jsonObject = JObject.Parse(result);
             var movieList = jsonObject["results"].ToObject<List<Movie>>();
-            return movieList;
+            var pageNumber = jsonObject["page"].ToObject<int>();
+            var totalPages = jsonObject["total_pages"].ToObject<int>();
+            MovieSearchResults movieSearchResults = new MovieSearchResults
+            {
+                SearchTitle = title,
+                Movies = movieList,
+                Page = pageNumber,
+                TotalPages = totalPages
+            };
+            return movieSearchResults;
         }
 
         public async Task<MovieDetail> GetMovieByIdAsync(int id)

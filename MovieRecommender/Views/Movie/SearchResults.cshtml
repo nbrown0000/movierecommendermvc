@@ -1,5 +1,5 @@
 ﻿@using MovieRecommender.Helper;
-@model IEnumerable<Movie>
+@model MovieSearchResults
 @{
     string tmdbImageUrlBase = "https://image.tmdb.org/t/p/original";
     string defaultImageUrl = "https://images.unsplash.com/photo-1560109947-543149eceb16?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=435&q=80";
@@ -7,45 +7,60 @@
 
 <div class="card mt-5 m-3 p-3 d-inline-flex bg-light bg-opacity-75">
 
-<h1>Your movie search results</h1>
+    <h1>Your movie search results</h1>
 
-<div class="album py-2">
-    <div class="d-flex justify-content-center flex-wrap">
-
-        @foreach (var movie in Model)
+    <div class="d-flex flex-row align-items-center m-2">
+        Page
+        @for (int i = 1; i <= Model.TotalPages; i++)
         {
-            <div class="d-flex flex-row m-2 w-100 bg-white">
-                
-                <a asp-action="Detail" asp-route-movieId="@movie.Id">
-                    <div class="poster-box">
-                        @if (!String.IsNullOrWhiteSpace(@movie.PosterPath))
-                        {
-                                <img class="card-img-top" alt="Movie Poster" src="@String.Concat(tmdbImageUrlBase, @movie.PosterPath)" data-holder-rendered="true">
-                        
-                        }
-                        else
-                        {
-                            <img class="card-img-top" alt="Default Movie Poster" src="@defaultImageUrl" data-holder-rendered="true">
-                        }
-                    </div>
-                </a>
-
-                <div class="card-body d-flex align-items-start justify-content-between flex-column">
-                    <h6 class="card-title m-0 p-0"><strong>@movie.Title</strong></h6>
-                    <div class="d-flex flex-row">
-                        <p class="card-text text-muted m-0 p-0 pe-4">@StringFunctions.FormatMovieYear(@movie.ReleaseDate)</p>
-                        <p class="card-text text-muted m-0 p-0 pe-4">RunTime</p>
-                        <p class="card-text text-muted m-0 p-0 pe-4">Rating</p>
-                        <p class="card-text text-muted m-0 p-0">Score</p>
-                    </div>
-                    <p class="card-text text-muted mb-2">@StringFunctions.ConvertGenreIdsToNames(movie.GenreIds)</p>
-                    <a asp-action="Recommendations" asp-route-movieId="@movie.Id" class="btn btn-secondary btn-recommend">Recommend me similar</a>
+            <form method="post">
+                <div hidden class="form-group mt-3" style="width: 20rem;">
+                    <input asp-for="SearchTitle" type="text" class="form-control" value="@Model.SearchTitle">
+                    <input asp-for="Page" type="text" class="form-control" value="@i">
                 </div>
 
-            </div>
-
+                <button class="border-0 bg-transparent" type="submit" class="">@i</button>
+            </form>
         }
     </div>
-</div>
+
+    <div class="album py-2">
+        <div class="d-flex justify-content-center flex-wrap">
+
+            @foreach (var movie in Model.Movies)
+            {
+                <div class="d-flex flex-row m-2 w-100 bg-white">
+                
+                    <a asp-action="Detail" asp-route-movieId="@movie.Id">
+                        <div class="poster-box">
+                            @if (!String.IsNullOrWhiteSpace(@movie.PosterPath))
+                            {
+                                    <img class="card-img-top" alt="Movie Poster" src="@String.Concat(tmdbImageUrlBase, @movie.PosterPath)" data-holder-rendered="true">
+                        
+                            }
+                            else
+                            {
+                                <img class="card-img-top" alt="Default Movie Poster" src="@defaultImageUrl" data-holder-rendered="true">
+                            }
+                        </div>
+                    </a>
+
+                    <div class="card-body d-flex align-items-start justify-content-between flex-column">
+                        <h6 class="card-title m-0 p-0"><strong>@movie.Title</strong></h6>
+                        <div class="d-flex flex-row">
+                            <p class="card-text text-muted m-0 p-0 pe-4">@StringFunctions.FormatMovieYear(@movie.ReleaseDate)</p>
+                            <p class="card-text text-muted m-0 p-0 pe-4">RunTime</p>
+                            <p class="card-text text-muted m-0 p-0 pe-4">Rating</p>
+                            <p class="card-text text-muted m-0 p-0">Score</p>
+                        </div>
+                        <p class="card-text text-muted mb-2">@StringFunctions.ConvertGenreIdsToNames(movie.GenreIds)</p>
+                        <a asp-action="Recommendations" asp-route-movieId="@movie.Id" class="btn btn-secondary btn-recommend">Recommend me similar</a>
+                    </div>
+
+                </div>
+
+            }
+        </div>
+    </div>
 
 </div>

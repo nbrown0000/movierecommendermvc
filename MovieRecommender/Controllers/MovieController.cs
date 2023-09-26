@@ -24,28 +24,31 @@ namespace MovieRecommender.Controllers
         }
 
         [HttpGet]
-        public IActionResult SearchByFavouriteMovie()
+        public IActionResult SearchByTitle()
         {
-            return View("SearchByFavouriteMovie");
+            return View("SearchByTitle");
         }
 
         [HttpPost]
-        public async Task<IActionResult> SearchByFavouriteMovie(SearchByFavouriteMovieModel model)
+        //public async Task<IActionResult> SearchByFavouriteMovie(SearchByFavouriteMovieModel model)
+        public async Task<IActionResult> SearchByTitle(string searchTitle, int page = 1)
         {
             // TODO: Sanitize data from form input
 
-            var movieList = await _tmdbAPIContext.SearchMoviesByTitleAsync(model.Title);
+            MovieSearchResults movieSearchResults = await _tmdbAPIContext.SearchMoviesByTitleAsync(searchTitle.ToString(), page);
 
-            return View("SearchResults", movieList);
+            return View("SearchResults", movieSearchResults);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Search(SearchMovieModel searchMovieModel)
+        //public async Task<IActionResult> Search(SearchMovieModel searchMovieModel)
+        public async Task<IActionResult> Search(string movieTitle, int page = 1)
         {
             // TODO: Sanitize data from form input
-            var movieList = await _tmdbAPIContext.SearchMoviesByTitleAsync(searchMovieModel.Title);
 
-            return View("Index", movieList);
+            MovieSearchResults movieSearchResults = await _tmdbAPIContext.SearchMoviesByTitleAsync(movieTitle, page);
+
+            return View("Index", movieSearchResults);
         }
 
         public async Task<IActionResult> Recommendations(int movieId, int page = 1)
@@ -57,7 +60,7 @@ namespace MovieRecommender.Controllers
                 // TODO: log error
                 // TODO: contingency for empty genres
             }
-            var recommendedMovies = await _tmdbAPIContext.GetMovieRecommendationsWithSameGenres(movieDetail.Genres, page);
+            MovieRecommendationsModel recommendedMovies = await _tmdbAPIContext.GetMovieRecommendationsWithSameGenres(movieDetail.Genres, page);
             recommendedMovies.MovieId = movieId;
             recommendedMovies.Genres = movieDetail.Genres;
 

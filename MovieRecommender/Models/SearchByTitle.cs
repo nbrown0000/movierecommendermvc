@@ -1,8 +1,8 @@
 ﻿namespace MovieRecommender.Models
 {
-    public class SearchByFavouriteMovieModel
+    public class SearchByTitle
     {
-        public string Title { get; set; }
+        public string SearchTitle { get; set; }
 
         //// Properties to add
         //public List<string> Genres { get; set; }
