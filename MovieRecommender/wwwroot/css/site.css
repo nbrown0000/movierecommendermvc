@@ -61,7 +61,13 @@ body::before {
     border-color: #007bff;
 }
 
-.detail-page-actor-image {
+.detail-page-image-box {
     border-radius: 50%;
-    aspect-ratio: 1;
+}
+
+.detail-page-actor-image {
+    width: 4rem;
+    height: 4rem;
+    object-fit: cover;
+    border-radius: 50%;
 }

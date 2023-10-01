@@ -30,25 +30,19 @@ namespace MovieRecommender.Controllers
         }
 
         [HttpPost]
-        //public async Task<IActionResult> SearchByFavouriteMovie(SearchByFavouriteMovieModel model)
         public async Task<IActionResult> SearchByTitle(string searchTitle, int page = 1)
         {
             // TODO: Sanitize data from form input
 
-            MovieSearchResults movieSearchResults = await _tmdbAPIContext.SearchMoviesByTitleAsync(searchTitle.ToString(), page);
-
-            return View("SearchResults", movieSearchResults);
+            return RedirectToAction("Search", new { title = searchTitle, page });
         }
 
-        [HttpPost]
         //public async Task<IActionResult> Search(SearchMovieModel searchMovieModel)
-        public async Task<IActionResult> Search(string movieTitle, int page = 1)
+        public async Task<IActionResult> Search(string title, int page = 1)
         {
-            // TODO: Sanitize data from form input
+            MovieSearchResults movieSearchResults = await _tmdbAPIContext.SearchMoviesByTitleAsync(title.ToString(), page);
 
-            MovieSearchResults movieSearchResults = await _tmdbAPIContext.SearchMoviesByTitleAsync(movieTitle, page);
-
-            return View("Index", movieSearchResults);
+            return View(movieSearchResults);
         }
 
         public async Task<IActionResult> Recommendations(int movieId, int page = 1)

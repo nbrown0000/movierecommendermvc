@@ -5,7 +5,7 @@
     string defaultImageUrl = "https://images.unsplash.com/photo-1560109947-543149eceb16?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=435&q=80";
 }
 
-<div class="card mt-5 m-3 p-3 d-inline-flex bg-light bg-opacity-75">
+<div class="card mt-5 m-3 p-3 d-flex bg-light bg-opacity-75">
 
     <h1>Your movie search results</h1>
 
@@ -13,7 +13,7 @@
         Page
         @for (int i = 1; i <= Model.TotalPages; i++)
         {
-            <form method="post">
+                <form method="post" action="SearchByTitle">
                 <div hidden class="form-group mt-3" style="width: 20rem;">
                     <input asp-for="SearchTitle" type="text" class="form-control" value="@Model.SearchTitle">
                     <input asp-for="Page" type="text" class="form-control" value="@i">
@@ -35,12 +35,12 @@
                         <div class="poster-box">
                             @if (!String.IsNullOrWhiteSpace(@movie.PosterPath))
                             {
-                                    <img class="card-img-top" alt="Movie Poster" src="@String.Concat(tmdbImageUrlBase, @movie.PosterPath)" data-holder-rendered="true">
+                                <img class="img-fluid" alt="Movie Poster" src="@String.Concat(tmdbImageUrlBase, @movie.PosterPath)" data-holder-rendered="true">
                         
                             }
                             else
                             {
-                                <img class="card-img-top" alt="Default Movie Poster" src="@defaultImageUrl" data-holder-rendered="true">
+                                <img class="img-fluid" alt="Default Movie Poster" src="@defaultImageUrl" data-holder-rendered="true">
                             }
                         </div>
                     </a>
@@ -49,12 +49,9 @@
                         <h6 class="card-title m-0 p-0"><strong>@movie.Title</strong></h6>
                         <div class="d-flex flex-row">
                             <p class="card-text text-muted m-0 p-0 pe-4">@StringFunctions.FormatMovieYear(@movie.ReleaseDate)</p>
-                            <p class="card-text text-muted m-0 p-0 pe-4">RunTime</p>
-                            <p class="card-text text-muted m-0 p-0 pe-4">Rating</p>
-                            <p class="card-text text-muted m-0 p-0">Score</p>
                         </div>
                         <p class="card-text text-muted mb-2">@StringFunctions.ConvertGenreIdsToNames(movie.GenreIds)</p>
-                        <a asp-action="Recommendations" asp-route-movieId="@movie.Id" class="btn btn-secondary btn-recommend">Recommend me similar</a>
+                        <a asp-action="Recommendations" asp-route-movieId="@movie.Id" class="btn btn-secondary btn-recommend">Recommend similar movies</a>
                     </div>
 
                 </div>
