@@ -31,6 +31,7 @@
 
                     <div class="d-flex flex-row">
                         <p class="card-text text-muted m-0 p-0 pe-4">@StringFunctions.FormatMovieYear(@Model.ReleaseDate)</p>
+                        <p class="card-text text-muted m-0 p-0 pe-4">@StringFunctions.GetLanguageName(@Model.Language)</p>
                         <p class="card-text text-muted m-0 p-0 pe-4">@Model.Runtime minutes</p>
                         <p class="card-text text-muted m-0 p-0 pe-4">@Model.Rating.ToString()/10</p>
                     </div>

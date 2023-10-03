@@ -43,9 +43,8 @@
                         <h6 class="card-title m-0 p-0"><strong>@movie.Title</strong></h6>
                         <div class="d-flex flex-row">
                             <p class="card-text text-muted m-0 p-0 pe-4">@StringFunctions.FormatMovieYear(@movie.ReleaseDate)</p>
-                            <p class="card-text text-muted m-0 p-0 pe-4">RunTime</p>
-                            <p class="card-text text-muted m-0 p-0 pe-4">Rating</p>
-                            <p class="card-text text-muted m-0 p-0">Score</p>
+                            <p class="card-text text-muted m-0 p-0 pe-4">@StringFunctions.GetLanguageName(@movie.Language)</p>
+                            <p class="card-text text-muted m-0 p-0">@movie.Score / 10</p>
                         </div>
                         <p class="card-text text-muted mb-2">@StringFunctions.ConvertGenreIdsToNames(movie.GenreIds)</p>
                         <a asp-action="Recommendations" asp-route-movieId="@movie.Id" class="btn btn-secondary btn-recommend">Recommend similar movies</a>

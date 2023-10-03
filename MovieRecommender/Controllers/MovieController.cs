@@ -37,7 +37,6 @@ namespace MovieRecommender.Controllers
             return RedirectToAction("Search", new { title = searchTitle, page });
         }
 
-        //public async Task<IActionResult> Search(SearchMovieModel searchMovieModel)
         public async Task<IActionResult> Search(string title, int page = 1)
         {
             MovieSearchResults movieSearchResults = await _tmdbAPIContext.SearchMoviesByTitleAsync(title.ToString(), page);

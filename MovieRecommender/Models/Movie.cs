@@ -22,5 +22,14 @@ namespace MovieRecommender.Models
 
         [JsonProperty("genre_ids")]
         public List<int>? GenreIds { get; set; }
+
+        [JsonProperty("vote_average")]
+        public double Score { get; set; }
+
+        [JsonProperty("vote_count")]
+        public int VoteCount { get; set; }
+
+        [JsonProperty("original_language")]
+        public string Language { get; set; }
     }
 }

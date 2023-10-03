@@ -31,6 +31,9 @@ namespace MovieRecommender.Models
         [JsonProperty("vote_average")]
         public double Rating { get; set; }
 
+        [JsonProperty("original_language")]
+        public string Language { get; set; }
+
         [JsonProperty("homepage")]
         public string Homepage { get; set; }
 

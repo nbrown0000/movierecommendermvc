@@ -88,5 +88,10 @@ namespace MovieRecommender.Helper
             }
             return genresString;
         }
+
+        public static string GetLanguageName(string languageCode)
+        {
+            return LanguageDictionary.Languages[languageCode];
+        }
     }
 }
