@@ -20,7 +20,6 @@ html {
 }
 
 body {
-    /*text-align: center;*/
     margin-bottom: 60px;
 }
 
@@ -61,13 +60,19 @@ body::before {
     border-color: #007bff;
 }
 
-.detail-page-image-box {
-    border-radius: 50%;
-}
-
 .detail-page-actor-image {
     width: 4rem;
     height: 4rem;
     object-fit: cover;
     border-radius: 50%;
+}
+
+.movie-homepage {
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    background: rgba(255,255,255,0.7);
 }

@@ -93,5 +93,13 @@ namespace MovieRecommender.Helper
         {
             return LanguageDictionary.Languages[languageCode];
         }
+
+        public static string GetDomainFromUrl(string url)
+        {
+            char[] delimeters = { '/' };
+            string[] parts = url.Split(delimeters);
+
+            return parts[2].Substring(4);
+        }
     }
 }
