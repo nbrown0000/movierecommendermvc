@@ -5,6 +5,8 @@ VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieRecommender", "MovieRecommender\MovieRecommender.csproj", "{EAA4FDB2-E89B-43FA-B5D4-C767B42C71AD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieRecommender.Test", "MovieRecommender.Test\MovieRecommender.Test.csproj", "{EE4A5D99-0EC5-42E2-A5D1-492ADBF36227}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{EAA4FDB2-E89B-43FA-B5D4-C767B42C71AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EAA4FDB2-E89B-43FA-B5D4-C767B42C71AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EAA4FDB2-E89B-43FA-B5D4-C767B42C71AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE4A5D99-0EC5-42E2-A5D1-492ADBF36227}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE4A5D99-0EC5-42E2-A5D1-492ADBF36227}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE4A5D99-0EC5-42E2-A5D1-492ADBF36227}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE4A5D99-0EC5-42E2-A5D1-492ADBF36227}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

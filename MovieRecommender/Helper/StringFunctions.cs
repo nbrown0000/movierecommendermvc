@@ -23,30 +23,21 @@ namespace MovieRecommender.Helper
             var genresString = "";
             for (int i = 0; i < genres.Count(); i++)
             {
-                genresString += GenreDictionary.Genres[genres.ElementAt(i)];
-                if (i < genres.Count() - 1)
+                try
                 {
-                    genresString += ", ";
+                    string genreFromDictionary = GenreDictionary.Genres[genres.ElementAt(i)];
+                    // Determine when to add comma to list
+                    if (i > 0 && genresString.Length != 0)
+                    {
+                        genresString += ", ";
+                    }
+                    genresString += genreFromDictionary;
                 }
-            }
-            return genresString;
-        }
-
-        public static string ConvertGenreIdsListToString(List<int> genres)
-        {
-            if (genres == null || genres.Count() == 0)
-            {
-                return "";
-            }
-
-            var genresString = "";
-            for (int i = 0; i < genres.Count(); i++)
-            {
-                genresString += genres.ElementAt(i).ToString();
-                if (i < genres.Count() - 1)
+                catch (KeyNotFoundException ex)
                 {
-                    genresString += ",";
+                    // TODO: log error about GenreDictionary key not found, what key was passed in
                 }
+                
             }
             return genresString;
         }
@@ -91,11 +82,21 @@ namespace MovieRecommender.Helper
 
         public static string GetLanguageName(string languageCode)
         {
+            if (String.IsNullOrWhiteSpace(languageCode))
+            {
+                return "";
+            }
+
             return LanguageDictionary.Languages[languageCode];
         }
 
         public static string GetDomainFromUrl(string url)
         {
+            if (String.IsNullOrWhiteSpace(url))
+            {
+                return "";
+            }
+
             char[] delimeters = { '/' };
             string[] parts = url.Split(delimeters);
 
