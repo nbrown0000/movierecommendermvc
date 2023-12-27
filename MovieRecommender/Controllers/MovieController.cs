@@ -13,10 +13,12 @@ namespace MovieRecommender.Controllers
     public class MovieController : Controller
     {
         private readonly ITmdbAPIContext _tmdbAPIContext;
+        private readonly ILogger<MovieController> _logger;
         
-        public MovieController(ITmdbAPIContext tmdbAPIContext)
+        public MovieController(ITmdbAPIContext tmdbAPIContext, ILogger<MovieController> logger)
         {
             _tmdbAPIContext = tmdbAPIContext;
+            _logger = logger;
         }
         public IActionResult Index()
         {
@@ -48,16 +50,26 @@ namespace MovieRecommender.Controllers
         {
             MovieDetail movieDetail = await _tmdbAPIContext.GetMovieByIdAsync(movieId);
 
+            // recommendations 
             if (movieDetail.Genres == null || movieDetail.Genres.Count == 0)
             {
                 // TODO: log error
+                _logger.LogWarning("");
                 // TODO: contingency for empty genres
             }
-            MovieRecommendationsModel recommendedMovies = await _tmdbAPIContext.GetMovieRecommendationsWithSameGenres(movieDetail.Genres, page);
-            recommendedMovies.MovieId = movieId;
-            recommendedMovies.Genres = movieDetail.Genres;
 
-            return View(recommendedMovies);
+            try {
+                MovieRecommendationsModel recommendedMovies = await _tmdbAPIContext.GetMovieRecommendationsWithSameGenres(movieDetail.Genres, page);
+                recommendedMovies.MovieId = movieId;
+                recommendedMovies.Genres = movieDetail.Genres;
+                return View(recommendedMovies);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error fetching movie recommendations: {ex}", ex);
+                return RedirectToAction("Error", "Home", ex);
+            }
+
         }
 
         public async Task<IActionResult> Detail(int movieId)

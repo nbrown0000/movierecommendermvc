@@ -72,6 +72,13 @@ namespace MovieRecommender.Data
 
         public async Task<MovieRecommendationsModel> GetMovieRecommendationsWithSameGenres(IEnumerable<Genre> genres, int page = 1)
         {
+            //throw new ArgumentException("genres cannot be null or empty!");
+
+            if (genres == null || genres.Count() == 0)
+            {
+                throw new ArgumentException("genres cannot be null or empty!");
+            }
+
             string queryUrl = $"discover/movie?api_key={_tmdbApiKey}" +
                 $"&with_genres={StringFunctions.ConvertGenreObjectsListToStringOfIds(genres.ToList())}" +
                 $"&page={page}";
