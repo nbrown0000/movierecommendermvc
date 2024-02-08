@@ -1,14 +1,24 @@
 ﻿@model SearchByTitle
 
-<div class="card mt-5 m-3 p-3 d-inline-flex bg-light">
-    <form method="post" asp-controller="Movie" asp-action="SearchByTitle">
+<div class="card mt-5 m-3 p-3 d-inline-flex bg-transparent border-0">
 
-        <h3>Search for your favourite movie</h3>
-
-        <div class="form-group mt-3" style="width: 20rem;">
-            <input asp-for="SearchTitle" type="text" class="form-control" placeholder="Title">
+    <div class="container-fluid d-flex justify-content-around flex-wrap">
+        <div class="card m-3 mb-0 border-0 bg-transparent">
+            <h3 class="text-light">Search for your favourite movie</h3>
         </div>
+    </div>
 
-        <button type="submit" class="btn btn-primary mt-3">Submit</button>
-    </form>
+
+    <div class="card mt-5 m-3 p-3 d-inline-flex bg-mov-theme-dark">
+
+        <form method="post" asp-controller="Movie" asp-action="SearchByTitle">
+
+            <div class="form-group" style="width: 20rem;">
+                <h5 class="text-mov-theme pb-2">Enter Title:</h5>
+                <input asp-for="SearchTitle" type="text" class="form-control" placeholder="Title">
+            </div>
+
+            <button type="submit" class="btn bg-mov-theme-yellow mt-3">Submit</button>
+        </form>
+    </div>
 </div>

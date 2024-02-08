@@ -5,7 +5,7 @@
     string defaultImageUrl = "https://images.unsplash.com/photo-1560109947-543149eceb16?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=435&q=80";
 }
 
-<div class="container card p-3 d-flex bg-light bg-opacity-75">
+<div class="container card p-3 d-flex bg-transparent">
     <div class="container">
         <div class="row">
             <div class="col-12 col-sm-12 col-md-4 col-lg-4 col p-0 detail-page-poster-box position-relative">
@@ -25,7 +25,7 @@
             </div>
 
             <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 ps-4">
-                <h1 class="card-title mb-3">@Model.Title</h1>
+                <h1 class="card-title text-light mb-3">@Model.Title</h1>
 
                 <p class="card-text text-muted m-0 p-0 pe-4">@Model.Runtime minutes</p>
 
@@ -37,19 +37,19 @@
 
                     <p class="card-text text-muted mb-3">@StringFunctions.ConvertGenreObjectsListToStringOfNames(Model.Genres)</p>
 
-                    <a asp-action="Recommendations" asp-route-movieId="@Model.Id" class="btn btn-secondary btn-recommend mb-3">Recommend similar movies</a>
+                    <a asp-action="Recommendations" asp-route-movieId="@Model.Id" class="btn bg-mov-theme-yellow mb-3">Recommend similar movies</a>
 
-                    <p class="card-text m-0 p-0 mb-3">@Model.Overview</p>
+                    <p class="card-text text-light m-0 p-0 mb-3">@Model.Overview</p>
 
-                <div class="container d-flex flex-row m-0 p-0 justify-content-between flex-wrap">
+                <div class="container d-flex flex-row m-0 p-0 flex-wrap">
                     @foreach (var actor in Model.Cast.Take(5))
                     {
-                        <div class="col-12 col-sm-6 col-md-4 col-lg-6 col-xl-4 d-flex flex-row mb-2">
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 d-flex flex-row p-2">
                             <div class="detail-page-image-box">
                                 <img class="detail-page-actor-image" src="@String.Concat(tmdbImageUrlBase,actor.Image)">
                             </div>
                             <div class="d-flex flex-column p-2">
-                                <p class="card-text p-0 m-0 small">@actor.Name</p>
+                                <p class="card-text text-light p-0 m-0 small">@actor.Name</p>
                                 <p class="card-text text-muted small">@actor.Character</p>
                             </div>
                         </div>

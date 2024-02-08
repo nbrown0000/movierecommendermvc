@@ -1,20 +1,19 @@
 ﻿@using MovieRecommender.Helper;
-@*@model IEnumerable<Movie>*@
 @model MovieRecommendationsModel
 @{
     string tmdbImageUrlBase = "https://image.tmdb.org/t/p/original";
     string defaultImageUrl = "https://images.unsplash.com/photo-1560109947-543149eceb16?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=435&q=80";
 }
 
-<div class="card mt-5 m-3 p-3 d-inline-flex bg-light bg-opacity-75">
+<div class="card mt-5 m-3 p-3 d-inline-flex bg-light bg-transparent">
 
-    <h1>Your movie recommendations</h1>
+    <h2 class="text-light">Your movie recommendations</h2>
 
     <p>
         Page
         @for (int i = 1; i <= Model.TotalPages; i++)
         {
-            <a asp-action="Recommendations" asp-route-movieId=@Model.MovieId asp-route-page=@i>@i</a>
+            <a class="text-light" asp-action="Recommendations" asp-route-movieId=@Model.MovieId asp-route-page=@i>@i</a>
         }
     </p>
 
@@ -23,18 +22,18 @@
 
             @foreach (var movie in Model.Movies)
             {
-                <div class="d-flex flex-row m-2 w-100 bg-white">
+                <div class="d-flex flex-row m-2 bg-mov-theme-dark text-light" style="width:45%">
 
                     <a asp-action="Detail" asp-route-movieId="@movie.Id">
                         <div class="poster-box">
                             @if (!String.IsNullOrWhiteSpace(@movie.PosterPath))
                             {
-                                <img class="card-img-top" alt="Movie Poster" src="@String.Concat(tmdbImageUrlBase, @movie.PosterPath)" data-holder-rendered="true">
+                                <img class="img-fluid" alt="Movie Poster" src="@String.Concat(tmdbImageUrlBase, @movie.PosterPath)" data-holder-rendered="true">
 
                             }
                             else
                             {
-                                <img class="card-img-top" alt="Default Movie Poster" src="@defaultImageUrl" data-holder-rendered="true">
+                                <img class="img-fluid" alt="Default Movie Poster" src="@defaultImageUrl" data-holder-rendered="true">
                             }
                         </div>
                     </a>
@@ -42,12 +41,12 @@
                     <div class="card-body d-flex align-items-start justify-content-between flex-column">
                         <h6 class="card-title m-0 p-0"><strong>@movie.Title</strong></h6>
                         <div class="d-flex flex-row">
-                            <p class="card-text text-muted m-0 p-0 pe-4">@StringFunctions.FormatMovieYear(@movie.ReleaseDate)</p>
-                            <p class="card-text text-muted m-0 p-0 pe-4">@StringFunctions.GetLanguageName(@movie.Language)</p>
-                            <p class="card-text text-muted m-0 p-0">@movie.Score / 10</p>
+                            <p class="card-text text-light m-0 p-0 pe-4">@StringFunctions.FormatMovieYear(@movie.ReleaseDate)</p>
+                            <p class="card-text text-light m-0 p-0 pe-4">@StringFunctions.GetLanguageName(@movie.Language)</p>
+                            <p class="card-text text-light m-0 p-0">@movie.Score / 10</p>
                         </div>
-                        <p class="card-text text-muted mb-2">@StringFunctions.ConvertGenreIdsToNames(movie.GenreIds)</p>
-                        <a asp-action="Recommendations" asp-route-movieId="@movie.Id" class="btn btn-secondary btn-recommend">Recommend similar movies</a>
+                        <p class="card-text text-light mb-2">@StringFunctions.ConvertGenreIdsToNames(movie.GenreIds)</p>
+                        <a asp-action="Recommendations" asp-route-movieId="@movie.Id" class="btn bg-mov-theme-yellow">Recommend similar movies</a>
                     </div>
 
                 </div>
