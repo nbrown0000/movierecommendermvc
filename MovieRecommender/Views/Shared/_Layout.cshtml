@@ -10,10 +10,11 @@
 </head>
 <body class="d-flex flex-column vh-100">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light mb-3">
             <div class="container-fluid">
-                <a class="header-title-link navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                    <h3 class="text-mov-theme">MovieRecommender</h3>
+                <a class="header-title-link navbar-brand d-flex" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img height="30px" width="30px" src="~/img/film.png" />
+                    <h3 class="text-mov-theme ms-2">MovieRecommender</h3>
                  </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -32,7 +33,7 @@
             </div>
         </nav>
     </header>
-    <div class="container-fluid content-container flex-grow-1">
+    <div class="main-content container-fluid content-container flex-grow-1">
         <main role="main" class="pb-3">
             <div class="background-container">
                 @RenderBody()

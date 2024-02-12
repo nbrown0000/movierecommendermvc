@@ -3,26 +3,66 @@
 @{
     string tmdbImageUrlBase = "https://image.tmdb.org/t/p/original";
     string defaultImageUrl = "https://images.unsplash.com/photo-1560109947-543149eceb16?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=435&q=80";
+    int pageMinusOne = Model.Page - 1;
+    int pageNumber = Model.Page;
+    int pagePlusOne = Model.Page + 1;
 }
 
-<div class="card mt-5 m-3 p-3 d-inline-flex bg-light bg-transparent">
+<div class="card mt-5 m-3 p-3 d-inline-flex bg-light bg-transparent border-0">
 
-    <h2 class="text-light">Your movie recommendations</h2>
+    <h2 class="text-light">Movies similar to @Model.SearchTitle</h2>
 
-    <p>
+    @* Page numbers *@
+    <p class="text-muted fs-5">
         Page
-        @for (int i = 1; i <= Model.TotalPages; i++)
-        {
-            <a class="text-light" asp-action="Recommendations" asp-route-movieId=@Model.MovieId asp-route-page=@i>@i</a>
+        @{
+            if(Model.TotalPages > 10)
+            {
+                @if(pageMinusOne != 1 && pageNumber != 1) {
+                    <a class="text-muted text-decoration-none" asp-action="Recommendations" asp-route-movieId=@Model.MovieId asp-route-page=1>1</a>
+                    <a class="text-muted text-decoration-none">...</a>
+                }
+                @if(pageMinusOne >= 1) {
+                    <a class="text-muted text-decoration-none" asp-action="Recommendations" asp-route-movieId=@Model.MovieId asp-route-page=@pageMinusOne>@pageMinusOne</a>
+                }
+
+                // Current Page:
+                <a class="text-mov-theme text-decoration-none" asp-action="Recommendations" asp-route-movieId=@Model.MovieId asp-route-page=@pageNumber>@pageNumber</a>
+
+                @if(pagePlusOne <= Model.TotalPages){
+                    <a class="text-muted text-decoration-none" asp-action="Recommendations" asp-route-movieId=@Model.MovieId asp-route-page=@pagePlusOne>@pagePlusOne</a>
+                }
+                @if (pagePlusOne != Model.TotalPages && pageNumber != Model.TotalPages)
+                {
+                    <a class="text-muted text-decoration-none">...</a>
+                    <a class="text-muted text-decoration-none" asp-action="Recommendations" asp-route-movieId=@Model.MovieId asp-route-page=@Model.TotalPages>@Model.TotalPages</a>
+                }
+            }
+            else
+            {
+                @for (int i = 1; i <= Model.TotalPages; i++)
+                {
+                    if(i == pageNumber)
+                    {
+                        <a class="text-mov-theme" asp-action="Recommendations" asp-route-movieId=@Model.MovieId asp-route-page=@i>@i</a>
+                    } 
+                    else
+                    {
+                        <a class="text-light" asp-action="Recommendations" asp-route-movieId=@Model.MovieId asp-route-page=@i>@i</a>
+                    }
+                    
+                }
+            }
         }
+        
     </p>
 
-    <div class="album py-2">
-        <div class="d-flex justify-content-center flex-wrap">
+    <div class="album">
+        <div class="d-flex flex-wrap">
 
             @foreach (var movie in Model.Movies)
             {
-                <div class="d-flex flex-row m-2 bg-mov-theme-dark text-light" style="width:45%">
+                <div class="d-flex my-2 flex-row bg-mov-theme-dark text-light w-100" style="min-width: 450px">
 
                     <a asp-action="Detail" asp-route-movieId="@movie.Id">
                         <div class="poster-box">
@@ -55,49 +95,43 @@
         </div>
     </div>
 
-    <p>
+    <p class="text-muted fs-5">
         Page
-        @for (int i = 1; i <= Model.TotalPages; i++)
-        {
-            <a asp-action="Recommendations" asp-route-movieId=@Model.MovieId asp-route-page=@i>@i</a>
+        @{
+            if (Model.TotalPages > 10)
+            {
+                @if (pageMinusOne != 1 && pageNumber != 1)
+                {
+                    <a class="text-muted text-decoration-none" asp-action="Recommendations" asp-route-movieId=@Model.MovieId asp-route-page=1>1</a>
+                    <a class="text-muted text-decoration-none">...</a>
+                }
+                @if (pageMinusOne >= 1)
+                {
+                    <a class="text-muted text-decoration-none" asp-action="Recommendations" asp-route-movieId=@Model.MovieId asp-route-page=@pageMinusOne>@pageMinusOne</a>
+                }
+
+                // Current Page:
+                <a class="text-mov-theme text-decoration-none" asp-action="Recommendations" asp-route-movieId=@Model.MovieId asp-route-page=@pageNumber>@pageNumber</a>
+
+                @if (pagePlusOne <= Model.TotalPages)
+                {
+                    <a class="text-muted text-decoration-none" asp-action="Recommendations" asp-route-movieId=@Model.MovieId asp-route-page=@pagePlusOne>@pagePlusOne</a>
+                }
+                @if (pagePlusOne != Model.TotalPages && pageNumber != Model.TotalPages)
+                {
+                    <a class="text-muted text-decoration-none">...</a>
+                    <a class="text-muted text-decoration-none" asp-action="Recommendations" asp-route-movieId=@Model.MovieId asp-route-page=@Model.TotalPages>@Model.TotalPages</a>
+                }
+            }
+            else
+            {
+                @for (int i = 1; i <= Model.TotalPages; i++)
+                {
+                    <a class="text-light" asp-action="Recommendations" asp-route-movieId=@Model.MovieId asp-route-page=@i>@i</a>
+                }
+            }
         }
+
     </p>
 
 </div>
-
-@*<div class="album py-2 bg-light">
-    <div class="d-flex justify-content-center flex-wrap">
-
-        @foreach (var movie in Model.Movies)
-        {
-            <div class="card mb-2 box-shadow m-2" style="width: 12rem;">
-                @if (!String.IsNullOrWhiteSpace(@movie.PosterPath))
-                {
-                    <img class="card-img-top" alt="Movie Poster" style="width: 100%; height: 17.5rem; display: block;" src="@String.Concat(tmdbImageUrlBase, @movie.PosterPath)" data-holder-rendered="true">
-                }
-                else
-                {
-                    <img class="card-img-top" alt="Default Movie Poster" style="width: 100%; height: 17.5rem; display: block;" src="@defaultImageUrl" data-holder-rendered="true">
-                }
-
-                <a asp-action="Detail" asp-route-movieId="@movie.Id" class="btn btn-secondary">View Details</a>
-
-                <div class="card-body d-flex align-items-start justify-content-between flex-column">
-                    <h6 class="card-title"><strong>@movie.Title</strong></h6>
-
-                    @if (@movie.ReleaseDate != null)
-                    {
-                        <p class="card-text">@movie.ReleaseDate.Value.Year.ToString()</p>
-                    }
-                    else
-                    {
-                        <p class="card-text">TBA</p>
-                    }
-
-                    <p class="card-text" style="min-height: 3rem">@StringFunctions.ConvertGenreIdsToNames(movie.GenreIds)</p>
-
-                </div>
-            </div>
-        }
-    </div>
-</div>*@
