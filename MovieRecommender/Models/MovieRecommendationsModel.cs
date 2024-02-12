@@ -2,6 +2,7 @@
 {
     public class MovieRecommendationsModel
     {
+        public string SearchTitle { get; set; }
         public int MovieId { get; set; }
         public IEnumerable<Genre> Genres { get; set; }
         public IEnumerable<Movie> Movies { get; set; }

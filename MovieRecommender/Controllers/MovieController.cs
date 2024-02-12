@@ -62,6 +62,7 @@ namespace MovieRecommender.Controllers
                 MovieRecommendationsModel recommendedMovies = await _tmdbAPIContext.GetMovieRecommendationsWithSameGenres(movieDetail.Genres, page);
                 recommendedMovies.MovieId = movieId;
                 recommendedMovies.Genres = movieDetail.Genres;
+                recommendedMovies.SearchTitle = movieDetail.Title;
                 return View(recommendedMovies);
             }
             catch (Exception ex)
