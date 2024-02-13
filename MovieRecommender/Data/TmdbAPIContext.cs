@@ -35,11 +35,14 @@ namespace MovieRecommender.Data
             if (!response.IsSuccessStatusCode)
             {
                 // TODO: log error message
+                // TODO: handle non successful status code
             }
 
             dynamic result = await response.Content.ReadAsStringAsync();
             var jsonObject = JObject.Parse(result);
-            var movieList = jsonObject["results"].ToObject<List<Movie>>();
+            List<Movie> movieList = jsonObject["results"].ToObject<List<Movie>>();
+            movieList = movieList.FindAll(movie => movie.GenreIds != null)
+                                 .FindAll(movie => movie.GenreIds.Count() != 0);
             var pageNumber = jsonObject["page"].ToObject<int>();
             var totalPages = jsonObject["total_pages"].ToObject<int>();
             MovieSearchResults movieSearchResults = new MovieSearchResults

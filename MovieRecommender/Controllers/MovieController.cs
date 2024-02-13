@@ -56,6 +56,14 @@ namespace MovieRecommender.Controllers
                 // TODO: log error
                 _logger.LogWarning("");
                 // TODO: contingency for empty genres
+                MovieRecommendationsModel recommendedMovies = new MovieRecommendationsModel
+                {
+                    MovieId = movieId,
+                    Genres = new List<Genre>(),
+                    Movies = new List<Movie>(),
+                    SearchTitle = movieDetail.Title
+                };
+                return View(recommendedMovies);
             }
 
             try {
