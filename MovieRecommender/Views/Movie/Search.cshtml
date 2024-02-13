@@ -112,42 +112,45 @@
 
     <div class="album py-2">
         <div class="d-flex flex-wrap">
-
+            
             @foreach (var movie in Model.Movies)
             {
-                <div class="d-flex my-2 flex-row bg-mov-theme-dark text-light w-100" style="min-width: 450px">
-                
-                    <a asp-action="Detail" asp-route-movieId="@movie.Id">
-                        <div class="poster-box">
-                            @if (!String.IsNullOrWhiteSpace(@movie.PosterPath))
-                            {
-                                <img class="img-fluid" alt="Movie Poster" src="@String.Concat(tmdbImageUrlBase, @movie.PosterPath)" data-holder-rendered="true">
-                        
-                            }
-                            else
-                            {
-                                <img class="img-fluid" alt="Default Movie Poster" src="@defaultImageUrl" data-holder-rendered="true">
-                            }
-                        </div>
-                    </a>
+                if (movie.GenreIds.Count() != 0)
+                {
+                    <div class="d-flex my-2 flex-row bg-mov-theme-dark text-light w-100" style="min-width: 450px">
 
-                    <div class="card-body d-flex align-items-start justify-content-between flex-column">
-                        <h6 class="card-title m-0 p-0"><strong>@movie.Title</strong></h6>
-                        <div class="d-flex flex-row">
-                            <p class="card-text text-light m-0 p-0 pe-4">@StringFunctions.FormatMovieYear(@movie.ReleaseDate)</p>
-                            <p class="card-text text-light m-0 p-0 pe-4">@StringFunctions.GetLanguageName(@movie.Language)</p>
-                            @if(movie.VoteCount > 0)
-                            {
-                                <p class="card-text text-light m-0 p-0">@movie.Score / 10</p>
-                            }
-                        </div>
+                        <a asp-action="Detail" asp-route-movieId="@movie.Id">
+                            <div class="poster-box">
+                                @if (!String.IsNullOrWhiteSpace(@movie.PosterPath))
+                                {
+                                    <img class="img-fluid" alt="Movie Poster" src="@String.Concat(tmdbImageUrlBase, @movie.PosterPath)" data-holder-rendered="true">
+
+                                }
+                                else
+                                {
+                                    <img class="img-fluid" alt="Default Movie Poster" src="@defaultImageUrl" data-holder-rendered="true">
+                                }
+                            </div>
+                        </a>
+
+                        <div class="card-body d-flex align-items-start justify-content-between flex-column">
+                            <h6 class="card-title m-0 p-0"><strong>@movie.Title</strong></h6>
+                            <div class="d-flex flex-row">
+                                <p class="card-text text-light m-0 p-0 pe-4">@StringFunctions.FormatMovieYear(@movie.ReleaseDate)</p>
+                                <p class="card-text text-light m-0 p-0 pe-4">@StringFunctions.GetLanguageName(@movie.Language)</p>
+                                @if (movie.VoteCount > 0)
+                                {
+                                    <p class="card-text text-light m-0 p-0">@movie.Score / 10</p>
+                                }
+                            </div>
                         <p class="card-text text-light mb-2">@StringFunctions.ConvertGenreIdsToNames(movie.GenreIds)</p>
                         <a asp-action="Recommendations" asp-route-movieId="@movie.Id" class="btn bg-mov-theme-yellow">Recommend similar movies</a>
                     </div>
 
                 </div>
-
+                }
             }
+        
         </div>
     </div>
 
