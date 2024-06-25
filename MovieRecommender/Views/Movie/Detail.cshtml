@@ -3,59 +3,64 @@
 @{
     string tmdbImageUrlBase = "https://image.tmdb.org/t/p/w500";
     string defaultImageUrl = "https://images.unsplash.com/photo-1560109947-543149eceb16?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=435&q=80";
+    string posterUrl = !String.IsNullOrWhiteSpace(@Model.PosterPath) ? String.Concat(tmdbImageUrlBase, @Model.PosterPath) : defaultImageUrl;
+    string posterAlt = !String.IsNullOrWhiteSpace(@Model.PosterPath) ? "Movie Poster" : "Default Movie Poster";
+    string score = @Model.Rating.ToString();
+    string year = @StringFunctions.FormatMovieYear(@Model.ReleaseDate);
+    string runtime = @Model.Runtime; // TODO: convert to h:m
+    string language = @StringFunctions.GetLanguageName(@Model.Language);
+    string genres = @StringFunctions.ConvertGenreObjectsListToStringOfNames(Model.Genres);
 }
 
-<div class="container card p-3 d-flex bg-transparent border-0">
-    <div class="container">
-        <div class="row">
-            <div class="col-12 col-sm-12 col-md-4 col-lg-4 col p-0 detail-page-poster-box position-relative">
-                <a href="@Model.Homepage" target="@Model.Homepage">
-                    @if (!String.IsNullOrWhiteSpace(@Model.PosterPath))
-                    {
-                        <img class="img-fluid mb-3" alt="Thumbnail [100%x225]" style="width: 100%; height: auto; display: inline-block;" src="@String.Concat(tmdbImageUrlBase, @Model.PosterPath)" data-holder-rendered="true">
-                    }
-                    else
-                    {
-                        <img class="img-fluid mb-3" alt="Thumbnail [100%x225]" style="width: 100%; height: auto; display: inline-block;" src="@defaultImageUrl" data-holder-rendered="true">
-                    }
-                </a>
-                <p class="movie-homepage">
-                    @StringFunctions.GetDomainFromUrl(Model.Homepage)
-                </p>
-            </div>
+<div class="grid-container m-0 p-1 p-md-3">
 
-            <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 ps-4">
-                <h1 class="card-title text-light mb-3">@Model.Title</h1>
+    <div class="movie-detail-img me-3">
+        <img class="card-img-top" alt="@posterAlt" src="@posterUrl" data-holder-rendered="true" />
+    </div>
 
-                <p class="card-text text-muted m-0 p-0 pe-4">@Model.Runtime minutes</p>
+    <div class="movie-detail-title m-0 p-0">
+        <h1 class="card-title m-0 p-0 text-light fs-2">@Model.Title</h1>
+    </div>
+    
+    <div class="movie-detail-score p-0 me-1 me-md-3">
+        <p class="card-text m-0 text-muted fs-2 ms-0 ms-md-4">@score</p>
+    </div>
+    
+    <div class="movie-detail-spec m-0 p-0">
+    <p class="card-text text-muted m-0">@year | @runtime minutes | @language </p>
+    </div>
 
-                    <div class="d-flex flex-row">
-                        <p class="card-text text-muted m-0 p-0 pe-4">@StringFunctions.FormatMovieYear(@Model.ReleaseDate)</p>
-                        <p class="card-text text-muted m-0 p-0 pe-4">@StringFunctions.GetLanguageName(@Model.Language)</p>
-                        <p class="card-text text-muted m-0 p-0 pe-4">@Model.Rating.ToString()/10</p>
-                    </div>
+    <div class="movie-detail-overview m-0 mt-3 mt-md-0 p-0">
+        <p class="card-text text-light">@Model.Overview</p>
+    </div>
 
-                    <p class="card-text text-muted mb-3">@StringFunctions.ConvertGenreObjectsListToStringOfNames(Model.Genres)</p>
+    <div class="movie-detail-genres m-0 p-0">
+        <p class="card-text text-muted m-0 p-0 pe-4">Genres: @genres</p>
+    </div>
 
-                    <a asp-action="Recommendations" asp-route-movieId="@Model.Id" class="btn bg-mov-theme-yellow mb-3">Recommend similar movies</a>
+    <div class="movie-detail-directedby m-0 p-0">
+        <p class="card-text text-muted m-0 p-0 pe-4">Directed by: _______</p>
+    </div>
 
-                    <p class="card-text text-light m-0 p-0 mb-3">@Model.Overview</p>
-
-                <div class="container d-flex flex-row m-0 p-0 flex-wrap">
-                    @foreach (var actor in Model.Cast.Take(5))
-                    {
-                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 d-flex flex-row p-2">
-                            <div class="detail-page-image-box">
-                                <img class="detail-page-actor-image" src="@String.Concat(tmdbImageUrlBase,actor.Image)">
-                            </div>
-                            <div class="d-flex flex-column p-2">
-                                <p class="card-text text-light p-0 m-0 small">@actor.Name</p>
-                                <p class="card-text text-muted small">@actor.Character</p>
-                            </div>
-                        </div>
-                    }
+    <div class="movie-detail-cast ms-md-3 pt-3">
+        @foreach (var actor in Model.Cast.Take(5))
+        {
+            <div class="d-flex flex-row px-0 p-2 p-md-1">
+                <div class="detail-page-image-box">
+                    <img class="detail-page-actor-image w-100 h-100" src="@String.Concat(tmdbImageUrlBase,actor.Image)">
+                </div>
+                <div class="d-flex flex-column p-2">
+                    <p class="card-text text-light p-0 m-0">@actor.Name</p>
+                    <p class="card-text text-muted">@actor.Character</p>
                 </div>
             </div>
-        </div>
+        }
     </div>
+        
+    <div class="movie-detail-recommend-button card-text text-muted mb-3">
+        <a asp-action="Recommendations" asp-route-movieId="@Model.Id" class="btn bg-mov-theme-yellow">
+            Recommend similar
+        </a>
+    </div>
+
 </div>
