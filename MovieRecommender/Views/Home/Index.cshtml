@@ -4,29 +4,38 @@
 
 @model SearchMovieModel
 
-<div class="main-homepage card mt-5 m-3 p-3 d-inline-flex bg-transparent border-0">
+<div class="main-homepage text-light card p-3 d-inline-flex bg-transparent border-0">
 
-    <div class="container-fluid d-flex justify-content-around flex-wrap">
-        <div class="card p-3 m-3 mb-0 border-0 bg-transparent">
-            <h2 class="text-light">Get movie recommendations based on</h2>
+@*     <div class="container-fluid d-flex justify-content-around flex-wrap">
+        <div class="card pb-3 mb-0 border-0 bg-transparent">
+            
         </div>
-    </div>
+    </div> *@
+
+    <h2 class="text-light text-center">Choose your search path:</h2>
 
     <div class="container-fluid d-flex justify-content-around flex-wrap">
 
         <div class="bg-mov-theme-dark card p-3 m-3" style="width: 18rem;">
-            <a class="nav-link text-dark m-0 p-0 mt-auto" asp-area="" asp-controller="Movie" asp-action="SearchByTitle">
+            <a class="nav-link text-light m-0 p-0" asp-area="" asp-controller="Movie" asp-action="SearchByTitle">
                 <h4 class="text-mov-theme">Your favourite movie</h4>
                 <p class="text-light">Find your favourite movie using our search and get recommendations for similar movies.</p>
             </a>
-            @* <a class="nav-link text-dark m-0 p-0 mt-auto" asp-area="" asp-controller="Movie" asp-action="SearchByTitle">
-                <div class="card homepage-card">
-                    <div class="card-body text-center p-1">
-                        <h5>Search by Title</h5>
-                    </div>
-                </div>
-            </a> *@
         </div>
+
+        @* <div class="bg-mov-theme-dark card p-3 m-3" style="width: 18rem;">
+            <a class="nav-link text-dark m-0 p-0" asp-area="" asp-controller="Movie" asp-action="SearchByRandom">
+                <h4 class="text-mov-theme">Random suggestion</h4>
+                <p class="text-light">Roll the dice and let fate decide for you.</p>
+            </a>
+        </div> *@
+
+        @*<div class="bg-mov-theme-dark card p-3 m-3" style="width: 18rem;">
+            <a class="nav-link text-dark m-0 p-0" asp-area="" asp-controller="Movie" asp-action="SearchByTitle">
+                <h4 class="text-mov-theme">Detailed search</h4>
+                <p class="text-light">Use our form to narrow your search in a more detailed way.</p>
+            </a>
+        </div> *@
 
         @*MORE OPTIONS COMING*@
 
